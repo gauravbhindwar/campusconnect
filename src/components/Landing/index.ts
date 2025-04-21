@@ -1,0 +1,11 @@
+export { default as HeaderSection } from './HeaderSection';
+export { default as WhySection } from './WhySection';
+export { default as FeaturesSection } from './FeaturesSection';
+export { default as StudentSuccessSection } from './StudentSuccessSection';
+export { default as TestimonialsSection } from './TestimonialsSection';
+export { default as StatsSection } from './StatsSection';
+export { default as SignUpSection } from './SignUpSection';
+export { default as CampusAmbassadorSection } from './CampusAmbassadorSection';
+export { default as TrustedBySection } from './TrustedBySection';
+export { default as AboutUsSection } from './AboutUsSection';
+export { default as FooterSection } from './FooterSection';
