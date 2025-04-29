@@ -6,12 +6,18 @@ import type { Metadata } from 'next';
 // import FooterSection from '../components/Landing/FooterSection';
 import { OrganizationStructuredData, FAQStructuredData } from '../components/SEO/StructuredData';
 import HomePage from '../components/HomePage/HomePage';
+
 export const metadata: Metadata = {
   title: 'Crewsity Connect | Student Innovation Platform',
-  description: 'Crewsity Connect is the platform for student innovators to showcase projects, collaborate with peers, and grow their skills and opportunities.',
+  description: 'Crewsity Connect is the platform for student innovators to showcase projects, collaborate with peers, and grow their skills and opportunities. Join our community to expand your network and find new opportunities.',
   alternates: {
     canonical: '/',
   },
+  openGraph: {
+    title: 'Crewsity Connect | Student Innovation Platform',
+    description: 'Crewsity Connect is the platform for student innovators to showcase projects, collaborate with peers, and grow their skills and opportunities.',
+    images: ['/images/og-image.png'],
+  }
 };
 
 // Sample FAQ data for structured data

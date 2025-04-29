@@ -1,91 +1,98 @@
 import React from 'react';
 
-type OrganizationProps = {
+interface OrganizationStructuredDataProps {
   name: string;
   url: string;
   logo: string;
-  sameAs?: string[];
-  description?: string;
-};
-
-type FAQItemProps = {
-  question: string;
-  answer: string;
-};
+  sameAs: string[];
+  description: string;
+}
 
 export const OrganizationStructuredData = ({
   name,
   url,
   logo,
-  sameAs = [],
-  description,
-}: OrganizationProps) => {
-  const structuredData = {
+  sameAs,
+  description
+}: OrganizationStructuredDataProps) => {
+  const orgData = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name,
     url,
     logo,
     sameAs,
-    ...(description && { description }),
+    description
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(orgData) }}
     />
   );
 };
 
-export const FAQStructuredData = ({ items }: { items: FAQItemProps[] }) => {
-  const structuredData = {
+interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface FAQStructuredDataProps {
+  items: FAQItem[];
+}
+
+export const FAQStructuredData = ({ items }: FAQStructuredDataProps) => {
+  const faqData = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: items.map((item) => ({
+    mainEntity: items.map(item => ({
       '@type': 'Question',
       name: item.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: item.answer,
-      },
-    })),
+        text: item.answer
+      }
+    }))
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(faqData) }}
     />
   );
 };
 
-export const BreadcrumbStructuredData = ({
-  items,
-}: {
-  items: { name: string; item: string }[];
-}) => {
-  const structuredData = {
+interface WebPageStructuredDataProps {
+  title: string;
+  description: string;
+  url: string;
+  datePublished?: string;
+  dateModified?: string;
+}
+
+export const WebPageStructuredData = ({
+  title,
+  description,
+  url,
+  datePublished,
+  dateModified
+}: WebPageStructuredDataProps) => {
+  const webpageData = {
     '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: item.item,
-    })),
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url,
+    ...(datePublished && { datePublished }),
+    ...(dateModified && { dateModified })
   };
 
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(webpageData) }}
     />
   );
-};
-
-export default {
-  OrganizationStructuredData,
-  FAQStructuredData,
-  BreadcrumbStructuredData,
 };

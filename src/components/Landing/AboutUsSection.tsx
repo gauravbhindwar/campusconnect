@@ -258,15 +258,15 @@ const AboutUsSection = () => {
               {milestones.map((milestone, index) => (
                 <motion.div 
                   key={`${milestone.year}-${milestone.quarter}`}
-                  className={`mb-12 flex items-center ${index % 2 === 0 ? 'justify-start md:justify-end' : 'justify-start'} md:w-1/2 ${index % 2 === 0 ? 'md:pr-8 ml-auto' : 'md:pl-8'}`}
+                  className={`mb-12 flex items-center ${index % 2 === 0 ? 'justify-start md:justify-end' : 'justify-start'} md:w-1/2 ${index % 2 === 0 ? 'md:pr-12 ml-auto' : 'md:pl-12'}`}
                   initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.6, delay: 0.2 + (index * 0.2) }}
                 >
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative">
+                  <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 relative mx-4 md:mx-0">
                     {/* Timeline dot */}
-                    <div className={`absolute top-1/2 transform -translate-y-1/2 ${index % 2 === 0 ? 'right-0 translate-x-1/2 md:-translate-x-4' : 'left-0 -translate-x-1/2 md:translate-x-4'} w-4 h-4 rounded-full bg-indigo-500 dark:bg-indigo-400 z-10 border-4 border-white dark:border-gray-800`}></div>
+                    <div className={`absolute top-1/2 transform -translate-y-1/2 ${index % 2 === 0 ? 'right-0 translate-x-1/2 md:translate-x-8' : 'left-0 -translate-x-1/2 md:-translate-x-8'} w-4 h-4 rounded-full bg-indigo-500 dark:bg-indigo-400 z-10 border-4 border-white dark:border-gray-800`}></div>
                     
                     <div className="flex flex-col md:flex-row md:items-baseline gap-2 mb-3">
                       <h4 className="text-sm font-semibold text-indigo-600 dark:text-indigo-400">{milestone.year} · {milestone.quarter}</h4>
@@ -293,7 +293,7 @@ const AboutUsSection = () => {
             <br />Join us on this journey!
           </p>
           <a
-            href="https://t.me/campusconnect_community"
+            href="https://t.me/crewsity"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"

@@ -124,6 +124,8 @@ const FooterSection = () => {
                   <motion.a
                     key={name}
                     href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="h-10 w-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-white hover:bg-indigo-600 transition-all duration-300"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -176,6 +178,8 @@ const FooterSection = () => {
                     <li key={link.name}>
                       <motion.a
                         href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-gray-400 hover:text-indigo-400 transition-colors duration-200 inline-block"
                         whileHover={{ x: 3 }}
                         transition={{ duration: 0.2 }}
@@ -259,6 +263,8 @@ const FooterSection = () => {
                 <motion.a 
                   key={item}
                   href={`#${item.toLowerCase()}`} 
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-gray-400 text-sm hover:text-indigo-400 transition-colors"
                   whileHover={{ y: -2 }}
                   transition={{ duration: 0.2 }}

@@ -1,5 +1,6 @@
 import sharp from 'sharp';
 import { promises as fs } from 'fs';
+import path from 'path';
 
 async function generateFavicons() {
   const svgPath = path.join(__dirname, '../public/crewsity.svg');

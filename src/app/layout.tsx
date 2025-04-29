@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     description: "The platform for student innovators to showcase, collaborate and grow.",
     images: [
       {
-        url: "/og-image.png",
+        url: "/images/og-image.png", // Updated path to use the generated image
         width: 1200,
         height: 630,
         alt: "Crewsity Connect - The student innovation platform",
@@ -69,13 +69,17 @@ export const metadata: Metadata = {
     title: "Crewsity Connect | Showcase, Collaborate and Grow",
     description: "The platform for student innovators to showcase projects, find teammates, and grow their skills.",
     creator: "@crewsity",
-    images: ["/crewsity.svg"],
+    images: ["/images/twitter-image.png"], // Updated path
   },
   icons: {
     icon: [
-      { url: "/favicon.png", sizes: "any" }
+      { url: "/images/favicon-32x32.png", sizes: "32x32" },
+      { url: "/images/favicon-16x16.png", sizes: "16x16" }
     ],
-    shortcut: "/favicon.png",
+    apple: [
+      { url: "/images/apple-touch-icon.png", sizes: "180x180" }
+    ],
+    shortcut: "/images/favicon.ico",
   },
   manifest: "/site.webmanifest",
   metadataBase: new URL("https://crewsity.com"),

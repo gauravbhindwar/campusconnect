@@ -4,7 +4,15 @@ Allow: /
 
 # Disallow certain paths
 Disallow: /api/
-Disallow: /_next/
+Disallow: /_next/static/images/
+Disallow: /_next/static/chunks/
+Disallow: /_next/static/css/
+Disallow: /_error
+
+# Allow Googlebot to read pages for generating descriptions
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
 
 # Sitemaps
 Sitemap: https://crewsity.com/sitemap.xml
