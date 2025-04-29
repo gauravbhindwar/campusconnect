@@ -1,9 +1,4 @@
 import type { Metadata } from 'next';
-// import HeaderSection from '../components/Landing/HeaderSection';
-// import FeaturesSection from '../components/Landing/FeaturesSection';
-// import AboutUsSection from '../components/Landing/AboutUsSection';
-// import CampusAmbassadorSection from '../components/Landing/CampusAmbassadorSection';
-// import FooterSection from '../components/Landing/FooterSection';
 import { OrganizationStructuredData, FAQStructuredData } from '../components/SEO/StructuredData';
 import HomePage from '../components/HomePage/HomePage';
 
@@ -17,6 +12,10 @@ export const metadata: Metadata = {
     title: 'Crewsity Connect | Student Innovation Platform',
     description: 'Crewsity Connect is the platform for student innovators to showcase projects, collaborate with peers, and grow their skills and opportunities.',
     images: ['/images/og-image.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
   }
 };
 
@@ -57,6 +56,26 @@ export default function Home() {
       />
       
       <FAQStructuredData items={faqItems} />
+      
+      {/* Website structured data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "https://crewsity.com",
+            "name": "Crewsity Connect",
+            "description": "Platform for students to collaborate, find projects, and connect with alumni.",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://crewsity.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })
+        }}
+      />
+      
       <HomePage/>
       {/* <HeaderSection />
       <FeaturesSection />
