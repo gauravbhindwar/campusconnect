@@ -3,6 +3,7 @@ import { connectToDatabase } from '@/utils/db/mongodb';
 import { sendConfirmationToUser, notifyAdmin } from '@/utils/email/emailService';
 import { hasUserCommunicated, createCommunicationRecord } from '@/utils/db/communicationSchema';
 
+// test
 export async function POST(request) {
   try {
     const data = await request.json();
