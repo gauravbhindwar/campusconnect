@@ -1,6 +1,9 @@
+"use client";
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { fadeIn, slideInLeft, slideInRight } from '../../utils/animations';
+import { fadeIn, slideInLeft, slideInRight } from '../../utils/animations/animations';
+import Image from 'next/image';
+import Link from 'next/link';
 
 // Predefined positions to avoid hydration mismatch
 const FLOATING_ELEMENTS = [
@@ -39,23 +42,67 @@ const HeaderSection = () => {
   
   return (
     <header 
-      className="relative bg-gradient-to-br from-blue-700 via-indigo-600 to-teal-600 text-white overflow-hidden"
+      className="relative bg-no-repeat bg-center bg-cover min-h-screen flex items-center"  
       onMouseMove={handleMouseMove}
-    >
-      {/* Animated background grid */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-            <defs>
-              <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
-                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="white" strokeWidth="0.5"/>
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
-        </div>
-      </div>
-      
+    >      
+      {/* Logo component with animation */}
+      <motion.div 
+        className="absolute top-6 left-6 md:top-8 md:left-8 z-20"
+        initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+        transition={{ 
+          duration: 0.8, 
+          ease: "easeOut",
+          delay: 0.2 
+        }}
+        whileHover={{ 
+          scale: 1.05,
+          rotate: [0, -5, 5, -3, 0],
+          transition: { duration: 0.5 }
+        }}
+      >
+        <Link href="/" className="flex items-center relative group">
+          <div className="w-12 h-12 md:w-14 md:h-14 rounded-lg bg-gradient-to-br from-teal-400 to-blue-500 flex items-center justify-center overflow-hidden relative">
+            {/* Replace with your actual logo image or SVG */}
+            {/* <svg viewBox="0 0 24 24" className="w-8 h-8 md:w-10 md:h-10 text-white">
+              <path 
+                fill="currentColor" 
+                d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M12,6.5A5.5,5.5 0 0,1 17.5,12A5.5,5.5 0 0,1 12,17.5A5.5,5.5 0 0,1 6.5,12A5.5,5.5 0 0,1 12,6.5M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9Z"
+              />
+            </svg> */}
+            <Image 
+              src="/crewsity.svg" 
+              alt="Crewsity Campus Connect Platform Logo" 
+              width={50} 
+              height={50} 
+              priority 
+            />
+            <motion.div 
+              className="absolute inset-0 bg-white/20"
+              initial={{ x: '-100%' }}
+              whileHover={{ x: '100%' }}
+              transition={{ duration: 0.6, ease: "easeInOut" }}
+            />
+          </div>
+          <motion.div 
+            className="ml-2 hidden md:block"
+            initial={{ opacity: 0, x: -5 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+          >
+            <span className="text-lg font-bold bg-gradient-to-r from-teal-300 to-sky-300 bg-clip-text text-transparent">
+              Crewsity
+            </span>
+          </motion.div>
+          <motion.div 
+            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-teal-300 to-sky-300 opacity-0 group-hover:opacity-100"
+            initial={{ scaleX: 0 }}
+            whileHover={{ scaleX: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+        </Link>
+      </motion.div>
+
       {/* Interactive glow effect following mouse */}
       {isClient && (
         <motion.div 
@@ -100,6 +147,7 @@ const HeaderSection = () => {
         {/* Main decorative blobs */}
         <motion.div
           className="absolute -top-20 -right-20 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400 to-sky-300 mix-blend-multiply blur-3xl opacity-20"
+          aria-hidden="true"
           animate={{ 
             scale: [1, 1.2, 1],
             rotate: [0, 15, 0],
@@ -138,23 +186,17 @@ const HeaderSection = () => {
             variants={slideInLeft}
           >
             <div className="relative inline-block">
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-white to-sky-100">
-                Campus
+              <span className="md:text-8xl sm:text-7xl text-6xl text-teal-300 relative">
+              Crewsity&nbsp;
               </span>
-              <motion.span 
-                className="absolute bottom-0 left-0 h-1 bg-white/40" 
-                initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 1, duration: 1.2 }}
-              />
             </div>
             <motion.span 
-              className="text-teal-300 relative"
+              className="md:text-5xl text-5xl sm:text-3xl bg-clip-text bg-gradient-to-r from-white to-sky-100"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.7 }}
             >
-              Connect
+             Campus Connect
             </motion.span>
           </motion.h1>
           
@@ -166,7 +208,7 @@ const HeaderSection = () => {
             transition={{ duration: 4, repeat: Infinity }}
           >
             <span className="text-5xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-sky-100">
-              Campus<span className="text-teal-300">Connect</span>
+              Ravi<span className="text-teal-300">Gaurav</span>
             </span>
           </motion.div>
         </div>

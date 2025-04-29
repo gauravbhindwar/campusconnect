@@ -1,18 +1,43 @@
+"use client"
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import axios from 'axios';
 
 const FooterSection = () => {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
   
-  const handleSubscribe = (e: React.FormEvent) => {
+  const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // Simulate newsletter subscription
-      setTimeout(() => {
+    
+    if (!email) return;
+    
+    try {
+      setIsSubmitting(true);
+      setError('');
+      
+      // Call our newsletter API endpoint
+      const response = await axios.post('/api/newsletter', { email });
+      
+      if (response.data.success) {
         setSubscribed(true);
         setEmail('');
-      }, 500);
+      } else {
+        setError(response.data.message || 'Failed to subscribe. Please try again.');
+      }
+    } catch (error: unknown) {
+      // console.error('Newsletter subscription error:', error);
+      
+      // Check for specific error case - user already subscribed
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        setError(error.response.data.message || 'Failed to subscribe. Please try again.');
+      } else {
+        setError('An error occurred. Please try again later.');
+      }
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -50,11 +75,11 @@ const FooterSection = () => {
   ];
   
   const socialLinks = [
-    { name: "Instagram", href: "#", icon: "instagram" },
-    { name: "Twitter", href: "#", icon: "twitter" },
-    { name: "LinkedIn", href: "#", icon: "linkedin" },
-    { name: "GitHub", href: "#", icon: "github" },
-    { name: "YouTube", href: "#", icon: "youtube" }
+    { name: "Instagram", href: "https://www.instagram.com/crewsity/", icon: "instagram" },
+    // { name: "Twitter", href: "#", icon: "twitter" },
+    { name: "LinkedIn", href: "https://www.linkedin.com/company/crewsity/", icon: "linkedin" },
+    // { name: "GitHub", href: "#", icon: "github" },
+    // { name: "YouTube", href: "#", icon: "youtube" }
   ];
 
   return (
@@ -85,8 +110,8 @@ const FooterSection = () => {
             >
               <div className="flex items-center mb-6">
                 {/* Logo placeholder */}
-                <div className="bg-gradient-to-r from-indigo-500 to-purple-500 w-10 h-10 rounded-lg mr-3 flex items-center justify-center text-xl font-bold">CC</div>
-                <h2 className="text-2xl font-bold">CampusConnect</h2>
+                <img src="/crewsity.svg" alt="CampusConnect Logo" className="w-10 h-10 rounded-lg mr-3" />
+                <h2 className="text-2xl font-bold">Crewsity Campus Connect</h2>
               </div>
               
               <p className="text-gray-300 mb-8 max-w-md">
@@ -194,9 +219,11 @@ const FooterSection = () => {
                   className="w-full bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 py-3 px-4 rounded-lg text-white font-medium transition-all duration-300"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  disabled={isSubmitting}
                 >
-                  Subscribe
+                  {isSubmitting ? 'Submitting...' : 'Subscribe'}
                 </motion.button>
+                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
               </form>
             ) : (
               <motion.div 
@@ -225,7 +252,7 @@ const FooterSection = () => {
         >
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm order-2 md:order-1 mt-4 md:mt-0">
-              &copy; {new Date().getFullYear()} CampusConnect. All rights reserved.
+              &copy; {new Date().getFullYear()} Crewsity. All rights reserved.
             </p>
             <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 order-1 md:order-2">
               {['Privacy', 'Terms', 'Cookies', 'FAQ', 'Support'].map((item) => (

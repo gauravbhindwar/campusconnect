@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { slideInLeft, slideInRight } from '../../utils/animations';
+import { slideInLeft, slideInRight } from '../../utils/animations/animations';
 
 const StudentSuccessSection = () => {
   const [hoverItem, setHoverItem] = useState<number | null>(null);

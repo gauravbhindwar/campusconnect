@@ -1,28 +1,31 @@
+"use client"
 import React from 'react';
 import { motion } from 'framer-motion';
+import {gauravImage,raviImage} from '../../assets/Developer';
+import Image from 'next/image';
 
 const AboutUsSection = () => {
   const teamMembers = [
     {
-      name: "Aryan Patel",
-      role: "Co-Founder & CEO",
-      bio: "Former student at IIT Bombay with a passion for connecting student talent with opportunities.",
-      image: "/team/aryan.jpg", // Replace with actual image paths
+      name: "Gaurav Kumar",
+      role: "Full Stack Developer, GenAI Engineer",
+      bio: "Full Stack Developer and GenAI Engineer with a passion for building scalable web applications and leveraging AI to enhance user experiences.",
+      image: gauravImage, // Replace with actual image paths
       links: {
-        linkedin: "#",
-        twitter: "#",
-        github: "#"
+        linkedin: "https://www.linkedin.com/in/gauravbhindwar/",
+        // twitter: "#",
+        github: "https://github.com/gauravbhindwar"
       }
     },
     {
-      name: "Prisha Singh",
-      role: "Co-Founder & CTO",
-      bio: "Computer Science grad from BITS Pilani who believes in building tech that empowers students.",
-      image: "/team/prisha.jpg",
+      name: "Ravi Kumar",
+      role: "AI/ML , Cloud Engineer",
+      bio: "AI/ML Engineer, Cloud Architect, and Data Analyst skilled in building intelligent systems, scalable cloud solutions, and extracting data-driven insights.",
+      image: raviImage,
       links: {
-        linkedin: "#",
-        twitter: "#",
-        github: "#"
+        linkedin: "https://www.linkedin.com/in/ravibh5522/",
+        // twitter: "#",
+        github: "https://github.com/ravibh5522"
       }
     }
   ];
@@ -30,28 +33,34 @@ const AboutUsSection = () => {
   // Company timeline/milestones
   const milestones = [
     {
-      year: "2022",
-      quarter: "Q3",
+      year: "2025",
+      quarter: "Q1",
       title: "The Idea",
-      description: "CampusConnect was born in a college hackathon at IIT Bombay"
+      description: "Crewsity was born out of a need to connect students with opportunities and projects."
     },
     {
-      year: "2022",
-      quarter: "Q4",
+      year: "2025",
+      quarter: "Q3",
       title: "Beta Launch",
-      description: "First 100 students from 5 partner colleges joined our beta"
+      description: "The beta version will be launched at three partner universities, garnering positive responses from early users and setting the stage for further development."
     },
-    {
-      year: "2023",
-      quarter: "Q2",
-      title: "First Funding",
-      description: "Secured pre-seed funding from campus innovation fund"
-    },
-    {
-      year: "2023",
+      {
+      year: "2025",
       quarter: "Q4",
-      title: "Growth Phase",
-      description: "Expanded to 100+ colleges with 5,000+ active users"
+      title: "Final Launch",
+      description: "The final version will be launched at three partner universities, garnering positive responses from early users and extending to additional universities."
+    },
+    // {
+    //   year: "2023",
+    //   quarter: "Q2",
+    //   title: "First Funding",
+    //   description: "Secured pre-seed funding from campus innovation fund"
+    // },
+    {
+      year: "2026",
+      quarter: "Q1",
+      title: "Connection Phase",
+      description: "Connecting 500+ colleges and 1,00,000+ students, creating a vast network of opportunities"
     }
   ];
 
@@ -116,11 +125,26 @@ const AboutUsSection = () => {
               whileHover={{ y: -5, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
             >
               <div className="w-full md:w-2/5 bg-gradient-to-br from-indigo-400 to-purple-500 dark:from-indigo-600 dark:to-purple-700">
-                {/* Image placeholder - replace with actual team images */}
-                <div className="aspect-square w-full bg-gray-200 dark:bg-gray-700 flex items-center justify-center">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor" className="w-1/3 h-1/3 text-gray-400 dark:text-gray-500">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                  </svg>
+                {/* Display actual team member image */}
+                <div className="aspect-square w-full h-full relative overflow-hidden">
+                  {typeof member.image === 'string' ? (
+                    // For images from public folder (string paths)
+                    <img 
+                      src={member.image} 
+                      alt={`${member.name} profile photo`}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    // For imported images (using Next.js Image for better performance)
+                    <Image 
+                      src={member.image} 
+                      alt={`${member.name} profile photo`}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      priority
+                    />
+                  )}
                 </div>
               </div>
               
@@ -268,14 +292,18 @@ const AboutUsSection = () => {
             We&apos;re just getting started on our mission to revolutionize the student ecosystem.
             <br />Join us on this journey!
           </p>
-          <motion.a
-            href="#join"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-sm hover:shadow-md transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.98 }}
+          <a
+            href="https://t.me/campusconnect_community"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 active:scale-95"
+            onClick={(e) => e.stopPropagation()}
           >
             Join Our Community
-          </motion.a>
+            <svg className="ml-2 w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+            </svg>
+          </a>
         </motion.div>
       </div>
     </section>

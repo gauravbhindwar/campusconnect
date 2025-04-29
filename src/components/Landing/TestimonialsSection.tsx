@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { fadeIn, staggerContainer } from '../../utils/animations';
+import { fadeIn, staggerContainer } from '../../utils/animations/animations';
 
 const TestimonialsSection = () => {
   const testimonials = [

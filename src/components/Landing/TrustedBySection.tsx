@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../utils/animations';
+import { fadeIn } from '../../utils/animations/animations';
 
 const TrustedBySection = () => {
   // College logos and their details

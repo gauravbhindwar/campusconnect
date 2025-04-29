@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+"use client"
+import React from 'react';
 import { motion } from 'framer-motion';
 
 const WhySection = () => {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
+  // const [activeCard, setActiveCard] = useState<number | null>(null);
   
   const features = [
     {
@@ -20,8 +21,8 @@ const WhySection = () => {
       textColor: "text-blue-600 dark:text-blue-400",
       borderColor: "border-blue-200 dark:border-blue-800/30",
       stats: [
-        { label: "Projects Showcased", value: "2,800+" },
-        { label: "Avg. Profile Views", value: "150/month" }
+        // { label: "Projects Showcased", value: "2,800+" },
+        // { label: "Avg. Profile Views", value: "150/month" }
       ],
       features: [
         "Custom project showcases with media",
@@ -45,8 +46,8 @@ const WhySection = () => {
       textColor: "text-indigo-600 dark:text-indigo-400",
       borderColor: "border-indigo-200 dark:border-indigo-800/30",
       stats: [
-        { label: "Teams Formed", value: "1,200+" },
-        { label: "Match Success Rate", value: "92%" }
+        // { label: "Teams Formed", value: "1,200+" },
+        // { label: "Match Success Rate", value: "92%" }
       ],
       features: [
         "AI-powered skill compatibility matching",
@@ -70,8 +71,8 @@ const WhySection = () => {
       textColor: "text-teal-600 dark:text-teal-400",
       borderColor: "border-teal-200 dark:border-teal-800/30",
       stats: [
-        { label: "Learning Resources", value: "5,000+" },
-        { label: "Mentor Network", value: "350+" }
+        // { label: "Learning Resources", value: "5,000+" },
+        // { label: "Mentor Network", value: "350+" }
       ],
       features: [
         "Personalized learning paths & recommendations",
@@ -142,8 +143,8 @@ const WhySection = () => {
                 boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)",
                 transition: { duration: 0.3 }
               }}
-              onMouseEnter={() => setActiveCard(feature.id)}
-              onMouseLeave={() => setActiveCard(null)}
+              // onMouseEnter={() => setActiveCard(feature.id)}
+              // onMouseLeave={() => setActiveCard(null)}
             >
               {/* Top gradient bar */}
               <div className={`h-2 w-full bg-gradient-to-r ${feature.color}`}></div>
@@ -163,14 +164,14 @@ const WhySection = () => {
                 </p>
                 
                 {/* Stats */}
-                <div className="flex justify-between mb-8">
+                {/* <div className="flex justify-between mb-8">
                   {feature.stats.map((stat, i) => (
                     <div key={i} className="text-center">
                       <div className={`text-xl font-bold ${feature.textColor}`}>{stat.value}</div>
                       <div className="text-sm text-gray-500 dark:text-gray-400">{stat.label}</div>
                     </div>
                   ))}
-                </div>
+                </div> */}
                 
                 {/* Features list */}
                 <div className="space-y-3">
@@ -181,7 +182,8 @@ const WhySection = () => {
                         key={i} 
                         className="flex items-start"
                         initial={{ opacity: 0, x: -10 }}
-                        animate={activeCard === feature.id ? { opacity: 1, x: 0 } : {}}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
                         transition={{ duration: 0.3, delay: i * 0.1 }}
                       >
                         <div className={`flex-shrink-0 h-5 w-5 ${feature.textColor} mr-2`}>
@@ -218,7 +220,7 @@ const WhySection = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.5 }}
         >
-          <div className="relative mb-8">
+          {/* <div className="relative mb-8">
             <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 text-5xl text-gray-200 dark:text-gray-700">
               &ldquo;
             </div>
@@ -235,7 +237,7 @@ const WhySection = () => {
               <div className="font-bold text-gray-900 dark:text-white">Rahul Desai</div>
               <div className="text-sm text-gray-500 dark:text-gray-400">Computer Science, IIT Delhi</div>
             </div>
-          </div>
+          </div> */}
         </motion.div>
       </div>
     </section>

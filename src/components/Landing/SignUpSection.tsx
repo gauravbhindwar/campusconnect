@@ -1,32 +1,105 @@
+"use client"
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { fadeIn } from '../../utils/animations';
+import { fadeIn } from '../../utils/animations/animations';
+import LegalDialog from '../misc/LegalDialog';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
 
 const SignUpSection = () => {
-  const [email, setEmail] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    institution: ''
+  });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogType, setDialogType] = useState<'terms' | 'privacy'>('terms');
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (email) {
-      // Simulate API call
-      setTimeout(() => {
-        setSubmitted(true);
-      }, 800);
+    
+    if (!formData.email || !formData.name || !formData.institution) {
+      setError('Please fill in all fields.');
+      toast.error('Please fill in all fields.');
+      return;
     }
+    
+    try {
+      setIsSubmitting(true);
+      setError('');
+      
+      // Send user data to our API with early_access inquiry type
+      const response = await axios.post('/api/email', {
+        name: formData.name,
+        email: formData.email,
+        institution: formData.institution,
+        subject: 'New Early Access Request',
+        message: `A new user has signed up for early access:\n\nName: ${formData.name}\nEmail: ${formData.email}\nInstitution: ${formData.institution}`,
+        inquiryType: 'early_access'
+      });
+      
+      if (response.data.success) {
+        setSubmitted(true);
+        toast.success('Successfully joined the waitlist! We\'ll be in touch soon.');
+        setFormData({
+          name: '',
+          email: '',
+          institution: ''
+        });
+      } else {
+        setError(response.data.message || 'Failed to submit request. Please try again.');
+        toast.error(response.data.message || 'Failed to submit request. Please try again.');
+      }
+    } catch (error) {
+      console.error('Early access sign up error:', error);
+      setError('An error occurred. Please try again later.');
+      toast.error('An error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const openDialog = (type: 'terms' | 'privacy') => {
+    setDialogType(type);
+    setDialogOpen(true);
   };
 
   return (
     <section id="signup" className="py-20 relative overflow-hidden">
+      {/* ToastContainer for notifications */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      
       {/* Background elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-gray-900 dark:to-indigo-950"></div>
-      
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-gradient-to-br from-purple-300/20 to-pink-300/20 rounded-full blur-3xl dark:from-purple-900/20 dark:to-pink-900/20"></div>
-      <div className="absolute bottom-0 left-0 -mb-32 -ml-32 w-96 h-96 bg-gradient-to-br from-blue-300/20 to-cyan-300/20 rounded-full blur-3xl dark:from-blue-900/20 dark:to-cyan-900/20"></div>
-      
-      {/* Pattern overlay */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-gray-900 dark:to-indigo-950">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-80 h-80 bg-gradient-to-br from-purple-300/20 to-pink-300/20 rounded-full blur-3xl dark:from-purple-900/20 dark:to-pink-900/20"></div>
+        <div className="absolute bottom-0 left-0 -mb-32 -ml-32 w-96 h-96 bg-gradient-to-br from-blue-300/20 to-cyan-300/20 rounded-full blur-3xl dark:from-blue-900/20 dark:to-cyan-900/20"></div>
+        
+        {/* Pattern overlay */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] dark:opacity-[0.05]"></div>
+      </div>
       
       <div className="container mx-auto max-w-7xl px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -134,6 +207,9 @@ const SignUpSection = () => {
                       <motion.input 
                         type="text" 
                         id="name"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
                         placeholder="Enter your name" 
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
                         required
@@ -146,9 +222,10 @@ const SignUpSection = () => {
                       <motion.input 
                         type="email" 
                         id="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="your@email.edu" 
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="your@email.xyz" 
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
                         required
                         whileFocus={{ scale: 1.01 }}
@@ -157,56 +234,45 @@ const SignUpSection = () => {
                     
                     <div>
                       <label htmlFor="institution" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Institution</label>
-                      <motion.select 
+                      <motion.input 
+                        type="text" 
                         id="institution"
+                        name="institution"
+                        value={formData.institution}
+                        onChange={handleChange}
+                        placeholder="Enter your institution"
                         className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
                         required
                         whileFocus={{ scale: 1.01 }}
-                      >
-                        <option value="">Select your institution</option>
-                        <option value="iit">IIT (Any)</option>
-                        <option value="nit">NIT (Any)</option>
-                        <option value="bits">BITS (Any)</option>
-                        <option value="iiit">IIIT (Any)</option>
-                        <option value="vit">VIT</option>
-                        <option value="other">Other</option>
-                      </motion.select>
+                      />
                     </div>
+                    
+                    {error && (
+                      <div className="bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 p-3 rounded-lg text-sm">
+                        {error}
+                      </div>
+                    )}
                     
                     <motion.button 
                       type="submit"
-                      className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300"
+                      className="w-full py-3 px-6 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex justify-center items-center"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
+                      disabled={isSubmitting}
                     >
-                      Join the Waitlist
+                      {isSubmitting ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        'Join the Waitlist'
+                      )}
                     </motion.button>
                   </motion.form>
-                  
-                  <div className="mt-6">
-                    <div className="relative">
-                      <div className="absolute inset-0 flex items-center">
-                        <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
-                      </div>
-                      <div className="relative flex justify-center text-sm">
-                        <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">or continue with</span>
-                      </div>
-                    </div>
-                    
-                    <div className="mt-6 grid grid-cols-3 gap-3">
-                      {['Google', 'Microsoft', 'Apple'].map((provider) => (
-                        <motion.button
-                          key={provider}
-                          type="button"
-                          className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600"
-                          whileHover={{ y: -2 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          {provider}
-                        </motion.button>
-                      ))}
-                    </div>
-                  </div>
                 </>
               ) : (
                 <motion.div 
@@ -226,7 +292,7 @@ const SignUpSection = () => {
                   </div>
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">You&apos;re on the list!</h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-6">
-                    We&apos;ve added {email} to our waitlist. We&apos;ll notify you when it&apos;s your turn to join.
+                    We&apos;ve added {formData.email ? formData.email : 'your email'} to our waitlist. We&apos;ll notify you when it&apos;s your turn to join.
                   </p>
                   <button 
                     onClick={() => setSubmitted(false)}
@@ -245,11 +311,18 @@ const SignUpSection = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 }}
             >
-              By signing up, you agree to our <a href="#" className="text-indigo-600 dark:text-indigo-400 hover:underline">Terms</a> and <a href="#" className="text-indigo-600 dark:text-indigo-400 hover:underline">Privacy Policy</a>.
+              By signing up, you agree to our <a href="#" onClick={(e) => {
+                e.preventDefault();
+                openDialog('terms');
+              }} className="text-indigo-600 dark:text-indigo-400 hover:underline">Terms</a> and <a href="#" onClick={(e) => {
+                e.preventDefault();
+                openDialog('privacy');
+              }} className="text-indigo-600 dark:text-indigo-400 hover:underline">Privacy Policy</a>.
             </motion.p>
           </motion.div>
         </div>
       </div>
+      <LegalDialog isOpen={dialogOpen} type={dialogType} onClose={() => setDialogOpen(false)} />
     </section>
   );
 };

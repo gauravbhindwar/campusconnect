@@ -1,6 +1,7 @@
+"use client"
 import React, { useState, ReactNode } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { fadeIn, staggerContainer, popUp } from '../../utils/animations';
+import { fadeIn, staggerContainer, popUp } from '../../utils/animations/animations';
 
 // Define the allowed colors for the FeatureCard
 type FeatureCardColor = 'blue' | 'indigo' | 'teal';

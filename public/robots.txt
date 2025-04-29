@@ -1,0 +1,10 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Disallow certain paths
+Disallow: /api/
+Disallow: /_next/
+
+# Sitemaps
+Sitemap: https://crewsity.com/sitemap.xml
