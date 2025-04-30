@@ -73,13 +73,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/images/favicon-32x32.png", sizes: "32x32" },
       { url: "/images/favicon-16x16.png", sizes: "16x16" }
     ],
     apple: [
       { url: "/images/apple-touch-icon.png", sizes: "180x180" }
     ],
-    shortcut: "/images/favicon.ico",
+    shortcut: "/favicon.ico",
   },
   manifest: "/site.webmanifest",
   metadataBase: new URL("https://crewsity.com"),
@@ -110,6 +112,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/favicon.png" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
