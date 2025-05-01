@@ -5,16 +5,15 @@ import "./globals.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap", // Optimize font loading
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
-  display: "swap", // Optimize font loading
+  display: "swap",
 });
 
-// Move viewport to its own export
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -57,7 +56,7 @@ export const metadata: Metadata = {
     description: "The platform for student innovators to showcase, collaborate and grow.",
     images: [
       {
-        url: "/images/og-image.png", // Updated path to use the generated image
+        url: "/images/og-image.png",
         width: 1200,
         height: 630,
         alt: "Crewsity Connect - The student innovation platform",
@@ -69,7 +68,7 @@ export const metadata: Metadata = {
     title: "Crewsity Connect | Showcase, Collaborate and Grow",
     description: "The platform for student innovators to showcase projects, find teammates, and grow their skills.",
     creator: "@crewsity",
-    images: ["/images/twitter-image.png"], // Updated path
+    images: ["/images/twitter-image.png"],
   },
   icons: {
     icon: [
@@ -100,7 +99,7 @@ export const metadata: Metadata = {
     }
   },
   verification: {
-    google: "google-site-verification-code", // Replace with actual verification code
+    google: "google-site-verification-code", // Replace with your actual code
   },
 };
 
@@ -112,7 +111,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" href="/favicon.png" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -131,9 +129,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
